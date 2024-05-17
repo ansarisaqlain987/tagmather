@@ -17,6 +17,9 @@ const config = {
         "2xl": "1400px",
       },
     },
+    backgroundImage: {
+      loginImg: "url('/login.jpg')"
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
