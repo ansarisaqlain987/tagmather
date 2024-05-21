@@ -5,13 +5,13 @@ import Link from "next/link"
 import {
   Home,
   LineChart,
-  Package,
+  BadgeDollarSign,
   Package2,
   PanelLeft,
   Search,
   Settings,
-  ShoppingCart,
-  Users2,
+  Blocks,
+  Landmark,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -44,7 +44,6 @@ export default function DashboardLayout({
 }>) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
-
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Link
@@ -75,11 +74,11 @@ export default function DashboardLayout({
                   href="#"
                   className="flex h-9 w-9 items-center justify-center rounded-lg  text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
-                  <ShoppingCart className="h-5 w-5" />
-                  <span className="sr-only">Orders</span>
+                  <Blocks className="h-5 w-5" />
+                  <span className="sr-only">Envelop</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Orders</TooltipContent>
+              <TooltipContent side="right">Envelop</TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <TooltipProvider >
@@ -89,11 +88,11 @@ export default function DashboardLayout({
                   href="#"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
-                  <Package className="h-5 w-5" />
-                  <span className="sr-only">Products</span>
+                  <BadgeDollarSign className="h-5 w-5" />
+                  <span className="sr-only">Transactions</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Products</TooltipContent>
+              <TooltipContent side="right">Transactions</TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <TooltipProvider >
@@ -103,11 +102,11 @@ export default function DashboardLayout({
                   href="#"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
-                  <Users2 className="h-5 w-5" />
-                  <span className="sr-only">Customers</span>
+                  <Landmark className="h-5 w-5" />
+                  <span className="sr-only">Loans</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Customers</TooltipContent>
+              <TooltipContent side="right">Loans</TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <TooltipProvider >
@@ -171,22 +170,22 @@ export default function DashboardLayout({
                   href="#"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground" //text-foreground
                 >
-                  <ShoppingCart className="h-5 w-5" />
-                  Orders
+                  <Blocks className="h-5 w-5" />
+                  Envelop
                 </Link>
                 <Link
                   href="#"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 >
-                  <Package className="h-5 w-5" />
-                  Products
+                  <BadgeDollarSign className="h-5 w-5" />
+                  Transactions
                 </Link>
                 <Link
                   href="#"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 >
-                  <Users2 className="h-5 w-5" />
-                  Customers
+                  <Landmark className="h-5 w-5" />
+                  Loans
                 </Link>
                 <Link
                   href="#"
@@ -214,7 +213,7 @@ export default function DashboardLayout({
                 className="overflow-hidden rounded-full"
               >
                 <Image
-                  src="/vercel.svg"
+                  src="https://lh3.googleusercontent.com/a/ACg8ocKKXjvPAdL8prQ5Gno3nPEAOlCijQY9PqGVhui1BYY6kJaBZ4Ly=s96-c"
                   width={36}
                   height={36}
                   alt="Avatar"
