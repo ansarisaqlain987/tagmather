@@ -29,13 +29,7 @@ import {
   TooltipTrigger,
   TooltipProvider
 } from "@/components/ui/tooltip"
-// import { Metadata } from "next";
 import {signOut} from "next-auth/react";
-
-// export const metadata: Metadata = {
-//   title: "Dashboard",
-//   description: "Dashboard",
-// };
 
 export default function DashboardLayout({
   children,
@@ -129,7 +123,7 @@ export default function DashboardLayout({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  href="/settings"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Settings className="h-5 w-5" />
@@ -188,11 +182,11 @@ export default function DashboardLayout({
                   Loans
                 </Link>
                 <Link
-                  href="#"
+                  href="/settings"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 >
                   <LineChart className="h-5 w-5" />
-                  Settings
+                  Analytics
                 </Link>
               </nav>
             </SheetContent>
@@ -224,7 +218,7 @@ export default function DashboardLayout({
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <Link href="/settings"><DropdownMenuItem>Settings</DropdownMenuItem></Link>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
