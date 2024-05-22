@@ -38,15 +38,17 @@ interface TransactionTableProps {
     columns: Column[];
     transactions: Transactions[];
     envelops: Envelope[];
+    displayViewAllButton?: boolean;
 }
-export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({ columns }) => {
+export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({ columns, displayViewAllButton }) => {
     const { isOpen, updateModalState, openModal } = useModalState();
     const onSubmitClick = async (data: any) => {
         console.log('HELLO ', data)
     }
+    const cName = cn("grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-1", !displayViewAllButton ? "h-[60rem]" : "h-full")
     return (
         <>
-            <div className="grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
+            <div className={cName}>
                 <Card
                     className="xl:col-span-2" x-chunk="dashboard-01-chunk-4"
                 >
@@ -57,12 +59,24 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
                                 Recent transactions.
                             </CardDescription>
                         </div>
-                        <Button asChild size="sm" className="ml-auto gap-1">
-                            <div onClick={() => openModal()}>
-                                Add
-                                <Plus className="h-4 w-4" />
-                            </div>
-                        </Button>
+                        <div className="w-[100%] flex justify-end gap-3">
+                            <Button asChild size="sm" >
+                                <div onClick={() => openModal()}>
+                                    Add
+                                    <Plus className="h-4 w-4" />
+                                </div>
+                            </Button>
+                            {
+                                displayViewAllButton && (
+                                    <Button asChild size="sm">
+                                        <Link href="/dashboard/transactions">
+                                            View All
+                                            <ArrowUpRight className="h-4 w-4" />
+                                        </Link>
+                                    </Button>
+                                )
+                            }
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <Table>

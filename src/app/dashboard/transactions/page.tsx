@@ -24,8 +24,6 @@ export default async function Trans() {
         },
     ]
     return (
-        <>
-            <TransactionTable columns={columns} transactions={allTransactions} envelops={allEnvelops}/>
-        </>
+        <TransactionTable columns={columns} transactions={allTransactions} envelops={allEnvelops} />
     )
 }
