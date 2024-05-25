@@ -15,12 +15,12 @@ datasource db {
 }
 
 model Envelope {
-  id          Int     @id
+  id          Int     @id @default(autoincrement())
   name        String
   description String?
   user        String
-  createdAt   String
-  updatedAt   String
+  createdAt   DateTime
+  updatedAt   DateTime
 
   transactions Transactions[]
 
@@ -28,16 +28,16 @@ model Envelope {
 }
 
 model Transactions {
-  id          Int     @id
+  id          Int             @id
   type        TransactionType
   amount      Decimal
   description String?
   user        String
-  createdAt   String
-  updatedAt   String
-  envelopeId Int
+  createdAt   DateTime
+  updatedAt   DateTime
+  envelopeId  Int
 
-  envelope   Envelope @relation(fields: [envelopeId], references: [id])
+  envelope Envelope @relation(fields: [envelopeId], references: [id])
 
   @@map("transactions")
 }

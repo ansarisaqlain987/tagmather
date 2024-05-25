@@ -27,13 +27,21 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getSampleAction } from "../actions/getSampleAction";
 import { Column, TransactionTable } from "./transactions/transactionTable";
-import { getAllTransactionsAndEnvelops } from "@/app/actions";
+import { getAllTransactionsAndEnvelops } from "@/app/actions/getAllTransactionsAndEnvelops";
 import { EnvelopTable } from "./envelops/envelopTable";
-import { getUserEnvelops } from "../actions/getUserEnvelops";
+import { getEnvelops } from "../actions/getEnvelops";
+import { addOrUpdateEnvelop } from "../actions/addOrUpdateEnvelop";
 
 async function Dashboard() {
     const [allTransactions, allEnvelops] = await getAllTransactionsAndEnvelops();
-    const envelops = await getUserEnvelops();
+    const envelops = await getEnvelops();
+    const saveEnvelop = async (data: any, id?: number) => {
+        try {
+            await addOrUpdateEnvelop(data, id);
+        } catch (e) {
+            console.log(e)
+        }
+    }
     const columns: Column[] = [
         {
             name: 'Type',
@@ -110,12 +118,11 @@ async function Dashboard() {
             </div>
             <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                 <div className="h-[50rem]">
-                    <EnvelopTable data={envelops} enableViewALlButton/>
+                    <EnvelopTable data={envelops} createOrUpdateEnvelopAction={addOrUpdateEnvelop} enableViewALlButton />
                 </div>
                 <div className="xl:col-span-2 h-[50rem]">
                     <TransactionTable columns={columns} transactions={allTransactions} envelops={allEnvelops} displayViewAllButton />
                 </div>
-
             </div>
 
         </>

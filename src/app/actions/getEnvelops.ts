@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth/next"
 
 export type UserEnvelopsWithTotal = Envelope & {amount: number};
-export const getUserEnvelops = async (): Promise<UserEnvelopsWithTotal[]> => {
+export const getEnvelops = async (): Promise<UserEnvelopsWithTotal[]> => {
     'use server';
     const session = await getServerSession(authOptions);
     if(!session || !session?.user?.email){
