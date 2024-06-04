@@ -1,22 +1,28 @@
 'use client';
-import { UserEnvelopsWithTotal } from "@/app/actions/getEnvelops";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useModalState } from "@/hooks/useModalState";
 import { ArrowUpRight, Plus } from "lucide-react";
 import Link from "next/link";
-import { FC, PropsWithChildren } from "react";
+import { AwaitedReactNode, FC, JSXElementConstructor, Key, PropsWithChildren, ReactElement, ReactNode, ReactPortal } from "react";
 import { AddOrUpdateEnvelopModal } from "./addOrUpdateEnvelopModal";
-import { addOrUpdateEnvelop } from "@/app/actions/addOrUpdateEnvelop";
-import { Envelope } from "@/generated/client";
+import { fetchCall } from "@/lib/fetch";
+import { useQuery } from "@tanstack/react-query";
+import { UserEnvelopsWithTotal } from "@/app/types";
+import { useGetEnvelopsData } from "@/queries/useGetEnvelopsData";
 
 interface Props {
     enableViewALlButton?: boolean;
-    data: UserEnvelopsWithTotal[];
     createOrUpdateEnvelopAction: (data: any, id?: number) => void;
 }
-export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton, createOrUpdateEnvelopAction, data: envelops }) => {
+export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton, createOrUpdateEnvelopAction }) => {
     const { isOpen, updateModalState, openModal } = useModalState();
+    const {data, refetch} = useGetEnvelopsData()
+    const createOrUpdateEnvelop = async (data: any, id?: number) => {
+        await createOrUpdateEnvelopAction(data, id);
+        refetch();
+    }
     return (
         <>
             <Card x-chunk="dashboard-01-chunk-5" className="h-full">
@@ -39,7 +45,7 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
                 </CardHeader>
                 <CardContent className="grid gap-8">
                     {
-                        envelops.map(e => (
+                        data?.map((e: UserEnvelopsWithTotal) => (
                             <div key={e.id} className="flex items-center gap-4">
                                 <div className="grid gap-1">
                                     <p className="text-sm font-medium leading-none">
@@ -56,7 +62,7 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
 
                 </CardContent>
             </Card>
-            <AddOrUpdateEnvelopModal open={isOpen} onOpenChange={updateModalState} onSubmitClick={createOrUpdateEnvelopAction} />
+            <AddOrUpdateEnvelopModal open={isOpen} onOpenChange={updateModalState} onSubmitClick={createOrUpdateEnvelop} />
         </>
     )
 }

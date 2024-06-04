@@ -1,5 +1,5 @@
 
-import { getAllTransactionsAndEnvelops } from "@/app/actions";
+import { getAllTransactionsAndEnvelops } from "@/app/actions/getAllTransactionsAndEnvelops";
 import { Column, TransactionTable } from "./transactionTable";
 
 export default async function Trans() {

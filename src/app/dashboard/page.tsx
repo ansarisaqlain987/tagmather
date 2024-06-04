@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link"
 import {
     Activity,
     ArrowUpRight,
@@ -7,8 +5,6 @@ import {
     DollarSign,
     Users,
 } from "lucide-react"
-
-import { Badge } from "@/components/ui/badge"
 import {
     Card,
     CardContent,
@@ -16,32 +12,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getSampleAction } from "../actions/getSampleAction";
 import { Column, TransactionTable } from "./transactions/transactionTable";
-import { getAllTransactionsAndEnvelops } from "@/app/actions/getAllTransactionsAndEnvelops";
 import { EnvelopTable } from "./envelops/envelopTable";
-import { getEnvelops } from "../actions/getEnvelops";
+import { FC } from "react";
 import { addOrUpdateEnvelop } from "../actions/addOrUpdateEnvelop";
 
-async function Dashboard() {
-    const [allTransactions, allEnvelops] = await getAllTransactionsAndEnvelops();
-    const envelops = await getEnvelops();
-    const saveEnvelop = async (data: any, id?: number) => {
-        try {
-            await addOrUpdateEnvelop(data, id);
-        } catch (e) {
-            console.log(e)
-        }
-    }
+
+const Dashboard: FC = async () => {
+
     const columns: Column[] = [
         {
             name: 'Type',
@@ -118,10 +96,10 @@ async function Dashboard() {
             </div>
             <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                 <div className="h-[50rem]">
-                    <EnvelopTable data={envelops} createOrUpdateEnvelopAction={addOrUpdateEnvelop} enableViewALlButton />
+                    <EnvelopTable enableViewALlButton createOrUpdateEnvelopAction={addOrUpdateEnvelop}/>
                 </div>
                 <div className="xl:col-span-2 h-[50rem]">
-                    <TransactionTable columns={columns} transactions={allTransactions} envelops={allEnvelops} displayViewAllButton />
+                    <TransactionTable columns={columns} transactions={[]} envelops={[]} displayViewAllButton />
                 </div>
             </div>
 
@@ -129,7 +107,6 @@ async function Dashboard() {
     )
 }
 
-export default async function DashboardComponent() {
-    await getSampleAction();
+export default function DashboardComponent() {
     return <Dashboard />
 }

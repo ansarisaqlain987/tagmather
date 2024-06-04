@@ -2,6 +2,7 @@ import { Envelope } from "@/generated/client"
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const addOrUpdateEnvelop = async (data: Pick<Envelope, 'description' | 'name'>, id?: number | undefined | null) => {
     "use server";

@@ -43,9 +43,8 @@ interface TransactionTableProps {
 export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({ columns, displayViewAllButton }) => {
     const { isOpen, updateModalState, openModal } = useModalState();
     const onSubmitClick = async (data: any) => {
-        console.log('HELLO ', data)
     }
-    const cName = cn("grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-1", !displayViewAllButton ? "h-[60rem]" : "h-full")
+    const cName = cn("grid gap-4 md:gap-8 grid-cols-1", !displayViewAllButton ? "h-[60rem]" : "h-full")
     return (
         <>
             <div className={cName}>
@@ -55,14 +54,10 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
                     <CardHeader className="flex flex-row items-center">
                         <div className="grid gap-2">
                             <CardTitle>Transactions</CardTitle>
-                            <CardDescription>
-                                Recent transactions.
-                            </CardDescription>
                         </div>
                         <div className="w-[100%] flex justify-end gap-3">
                             <Button asChild size="sm" >
                                 <div onClick={() => openModal()}>
-                                    Add
                                     <Plus className="h-4 w-4" />
                                 </div>
                             </Button>
@@ -70,7 +65,6 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
                                 displayViewAllButton && (
                                     <Button asChild size="sm">
                                         <Link href="/dashboard/transactions">
-                                            View All
                                             <ArrowUpRight className="h-4 w-4" />
                                         </Link>
                                     </Button>
