@@ -1,9 +1,7 @@
 
-import { getAllTransactionsAndEnvelops } from "@/app/actions/getAllTransactionsAndEnvelops";
 import { Column, TransactionTable } from "./transactionTable";
 
 export default async function Trans() {
-    const [allTransactions, allEnvelops] = await getAllTransactionsAndEnvelops();
 
     const columns: Column[] = [
         {
@@ -24,6 +22,6 @@ export default async function Trans() {
         },
     ]
     return (
-        <TransactionTable columns={columns} transactions={allTransactions} envelops={allEnvelops} />
+        <TransactionTable columns={columns} transactions={[]} envelops={[]} />
     )
 }
