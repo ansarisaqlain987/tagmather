@@ -39,7 +39,7 @@ const Dashboard: FC = async () => {
         },
     ]
     return (
-        <>
+        <div className="flex flex-col flex-1 md:gap-8">
             <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                 <Card x-chunk="dashboard-01-chunk-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -94,16 +94,16 @@ const Dashboard: FC = async () => {
                     </CardContent>
                 </Card>
             </div>
-            <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-                <div className="h-[50rem]">
-                    <EnvelopTable enableViewALlButton createOrUpdateEnvelopAction={addOrUpdateEnvelop}/>
-                </div>
-                <div className="xl:col-span-2 h-[50rem]">
-                    <TransactionTable columns={columns} transactions={[]} envelops={[]} displayViewAllButton />
+            <div className="flex flex-1">
+                <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+                    <EnvelopTable enableViewALlButton createOrUpdateEnvelopAction={addOrUpdateEnvelop} />
+
+                    <div className="xl:col-span-2">
+                        <TransactionTable columns={columns} transactions={[]} envelops={[]} displayViewAllButton />
+                    </div>
                 </div>
             </div>
-
-        </>
+        </div>
     )
 }
 
