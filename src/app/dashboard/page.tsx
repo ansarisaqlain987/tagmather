@@ -94,7 +94,6 @@ const Dashboard: FC = async () => {
                     </CardContent>
                 </Card>
             </div>
-            <div className="flex flex-1">
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                     <EnvelopTable enableViewALlButton createOrUpdateEnvelopAction={addOrUpdateEnvelop} />
 
@@ -102,7 +101,6 @@ const Dashboard: FC = async () => {
                         <TransactionTable columns={columns} transactions={[]} envelops={[]} displayViewAllButton />
                     </div>
                 </div>
-            </div>
         </div>
     )
 }

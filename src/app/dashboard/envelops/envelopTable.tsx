@@ -46,7 +46,7 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
                     </div>
                 </CardHeader>
 
-                <ScrollArea className="max-h-[50rem]" >
+                <ScrollArea className="max-h-[40rem]" >
                     <CardContent className="grid gap-8">
                         {
                             data?.map((e: UserEnvelopsWithTotal) => (
