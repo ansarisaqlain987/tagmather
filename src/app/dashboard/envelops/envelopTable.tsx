@@ -27,7 +27,7 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
     }
     return (
         <>
-            <Card x-chunk="dashboard-01-chunk-5" className="flex flex-col">
+            <Card x-chunk="dashboard-01-chunk-5" className="flex flex-col h-full">
                 <CardHeader className="flex flex-row items-center">
                     <div className="grid gap-2">
                         <CardTitle>Envelops</CardTitle>
@@ -46,7 +46,7 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
                     </div>
                 </CardHeader>
 
-                <ScrollArea className="max-h-[40rem]" >
+                <ScrollArea className="h-full" >
                     <CardContent className="grid gap-8">
                         {
                             data?.map((e: UserEnvelopsWithTotal) => (
