@@ -44,7 +44,7 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
     const { isOpen, updateModalState, openModal } = useModalState();
     const onSubmitClick = async (data: any) => {
     }
-    const cName = cn("grid gap-4 md:gap-8 grid-cols-1", !displayViewAllButton ? "h-[60rem]" : "h-full")
+    const cName = cn("grid gap-4 md:gap-8 grid-cols-1 xl:col-span-2", !displayViewAllButton ? "h-[65vh]" : "h-full")
     return (
         <>
             <div className={cName}>
@@ -83,8 +83,8 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
                                             )
                                             return <TableHead
                                                 key={index}
-                                                aria-disabled={obj.disable}
-                                                className={clsNames}>
+                                                className={clsNames}
+                                                aria-sort="ascending">
                                                 {obj.name}
                                             </TableHead>
                                         })
@@ -114,9 +114,9 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
                     </CardContent>
                 </Card>
             </div>
-            <>
-                <AddOrUpdateTransaction open={isOpen} onOpenChange={updateModalState} onSubmitClick={onSubmitClick} />
-            </>
+
+            <AddOrUpdateTransaction open={isOpen} onOpenChange={updateModalState} onSubmitClick={onSubmitClick} />
+
         </>
     )
 }
