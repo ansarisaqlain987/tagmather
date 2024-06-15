@@ -26,45 +26,44 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
         refetch();
     }
     return (
-            <Card x-chunk="dashboard-01-chunk-5" className="h-[100%] flex flex-col">
-                <CardHeader className="flex flex-row items-center">
-                    <div className="grid gap-2">
-                        <CardTitle>Envelops</CardTitle>
-                    </div>
-                    <div className="w-[100%] flex justify-end gap-3">
-                        <Button asChild size="sm" onClick={() => openModal()}>
-                            <div>
-                                <Plus className="h-4 w-4" />
-                            </div>
-                        </Button>
-                        {enableViewALlButton && (<Button asChild size="sm">
-                            <Link href="/dashboard/envelops">
-                                <ArrowUpRight className="h-4 w-4" />
-                            </Link>
-                        </Button>)}
-                    </div>
-                </CardHeader>
-
-                <ScrollArea className="flex-1 h-full" >
-                    <CardContent className="grid gap-8 h-[65vh]">
-                        {
-                            data?.map((e: UserEnvelopsWithTotal) => (
-                                <div key={e.id} className="flex items-center gap-4">
-                                    <div className="grid gap-1">
-                                        <p className="text-sm font-medium leading-none">
-                                            {e.name}
-                                        </p>
-                                        <p className="text-sm text-muted-foreground">
-                                            {e.description}
-                                        </p>
-                                    </div>
-                                    <div className="ml-auto font-medium">+${e.amount}</div>
+        <Card x-chunk="dashboard-01-chunk-5" className="h-[100%] flex flex-col">
+            <CardHeader className="flex flex-row items-center">
+                <div className="grid gap-2">
+                    <CardTitle>Envelops</CardTitle>
+                </div>
+                <div className="w-[100%] flex justify-end gap-3">
+                    <Button asChild size="sm" onClick={() => openModal()}>
+                        <div>
+                            <Plus className="h-4 w-4" />
+                        </div>
+                    </Button>
+                    {enableViewALlButton && (<Button asChild size="sm">
+                        <Link href="/dashboard/envelops">
+                            <ArrowUpRight className="h-4 w-4" />
+                        </Link>
+                    </Button>)}
+                </div>
+            </CardHeader>
+            <ScrollArea className="h-[65vh] pb-6" >
+                <CardContent className="h-[65vh] grid gap-6 ">
+                    {
+                        data?.map((e: UserEnvelopsWithTotal) => (
+                            <div key={e.id} className="flex items-center gap-4 last:mb-4">
+                                <div className="grid gap-1">
+                                    <p className="text-sm font-medium leading-none">
+                                        {e.name}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                        {e.description}
+                                    </p>
                                 </div>
-                            ))
-                        }
-                    </CardContent>
-                </ScrollArea>
-                <AddOrUpdateEnvelopModal open={isOpen} onOpenChange={updateModalState} onSubmitClick={createOrUpdateEnvelop} />
-            </Card>
+                                <div className="ml-auto font-medium">+${e.amount}</div>
+                            </div>
+                        ))
+                    }
+                </CardContent>
+            </ScrollArea>
+            <AddOrUpdateEnvelopModal open={isOpen} onOpenChange={updateModalState} onSubmitClick={createOrUpdateEnvelop} />
+        </Card>
     )
 }
