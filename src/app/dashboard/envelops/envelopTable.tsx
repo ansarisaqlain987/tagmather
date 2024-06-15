@@ -12,6 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import { UserEnvelopsWithTotal } from "@/app/types";
 import { useGetEnvelopsData } from "@/queries/useGetEnvelopsData";
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { DataTable } from "@/components/DataTable";
+import { columns } from "./columns";
 
 
 interface Props {
@@ -20,7 +22,7 @@ interface Props {
 }
 export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton, createOrUpdateEnvelopAction }) => {
     const { isOpen, updateModalState, openModal } = useModalState();
-    const { data, refetch } = useGetEnvelopsData()
+    const { data, refetch, isLoading } = useGetEnvelopsData<UserEnvelopsWithTotal[]>()
     const createOrUpdateEnvelop = async (data: any, id?: number) => {
         await createOrUpdateEnvelopAction(data, id);
         refetch();
@@ -46,6 +48,11 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
             </CardHeader>
             <ScrollArea className="h-[65vh] pb-6" >
                 <CardContent className="h-[65vh] grid gap-6 ">
+                    <DataTable columns={columns} data={data as UserEnvelopsWithTotal[]} loading={isLoading} />
+                </CardContent>
+            </ScrollArea>
+            {/* <ScrollArea className="h-[65vh] pb-6" >
+                <CardContent className="h-[65vh] grid gap-6 ">
                     {
                         data?.map((e: UserEnvelopsWithTotal) => (
                             <div key={e.id} className="flex items-center gap-4 last:mb-4">
@@ -62,7 +69,7 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
                         ))
                     }
                 </CardContent>
-            </ScrollArea>
+            </ScrollArea> */}
             <AddOrUpdateEnvelopModal open={isOpen} onOpenChange={updateModalState} onSubmitClick={createOrUpdateEnvelop} />
         </Card>
     )

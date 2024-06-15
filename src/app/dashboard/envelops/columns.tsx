@@ -4,12 +4,9 @@ import { UserEnvelopsWithTotal } from "@/app/types";
 
 export const columns: ColumnDef<UserEnvelopsWithTotal>[] = [
     {
-        accessorKey: "id",
-        header: "Id",
-    },
-    {
         accessorKey: "name",
         header: "Name",
+        sortingFn: 'alphanumeric',
     },
     {
         accessorKey: "description",
@@ -17,6 +14,11 @@ export const columns: ColumnDef<UserEnvelopsWithTotal>[] = [
     },
     {
         accessorKey: "amount",
-        header: "Amount",
+        header: () => {
+            return <div style={{ textAlign: "right" }}>Amount</div>
+        },
+        cell: ({row}) => {
+            return <div style={{ textAlign: "right" }}>{row.getValue("amount")}</div>
+        }
     },
 ]
