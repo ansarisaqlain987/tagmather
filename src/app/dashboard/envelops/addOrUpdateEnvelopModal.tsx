@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect } from "react";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -24,11 +24,13 @@ import {
 } from "@/components/ui/form"
 import { Envelope } from "@/generated/client";
 import { addOrUpdateEnvelop } from "@/app/actions/addOrUpdateEnvelop";
+import { UserEnvelopsWithTotal } from "@/app/types";
 
 interface Props {
     open: boolean;
     onOpenChange: (val: boolean) => void;
     onSubmitClick: (data: any, id?: number) => void;
+    data?: Partial<UserEnvelopsWithTotal>
 }
 
 const formSchema = z.object({
@@ -36,20 +38,27 @@ const formSchema = z.object({
     description: z.string()
 })
 
-export const AddOrUpdateEnvelopModal: FC<PropsWithChildren<Props>> = ({ open, onOpenChange, onSubmitClick }) => {
+export const AddOrUpdateEnvelopModal: FC<PropsWithChildren<Props>> = ({ open, onOpenChange, onSubmitClick, data }) => {
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: '',
-            description: ''
+            name: data?.name ?? '',
+            description: data?.description ?? ''
         }
     });
+
+    useEffect(() => {
+        form.setValue('name', data?.name ?? '');
+        form.setValue('description', data?.description ?? '');
+    }, [data, form]);
     const onModalStateChange = (val: boolean) => {
         onOpenChange(val);
         form.reset();
     }
     function onSubmit(values: z.infer<typeof formSchema>) {
-        onSubmitClick?.(values)
+        console.log(data);
+        onSubmitClick?.(values, data?.id)
         onModalStateChange(false);
     }
     return (
@@ -68,7 +77,7 @@ export const AddOrUpdateEnvelopModal: FC<PropsWithChildren<Props>> = ({ open, on
                                     <FormItem>
                                         <FormLabel>Envelop Name</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Envelop Name" {...field} />
+                                            <Input placeholder="Envelop Name" {...field}  />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

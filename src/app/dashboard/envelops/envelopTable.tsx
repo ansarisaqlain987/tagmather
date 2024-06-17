@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useModalState } from "@/hooks/useModalState";
 import { ArrowUpRight, Plus } from "lucide-react";
 import Link from "next/link";
-import { AwaitedReactNode, FC, JSXElementConstructor, Key, PropsWithChildren, ReactElement, ReactNode, ReactPortal } from "react";
+import { AwaitedReactNode, FC, JSXElementConstructor, Key, PropsWithChildren, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { AddOrUpdateEnvelopModal } from "./addOrUpdateEnvelopModal";
 import { fetchCall } from "@/lib/fetch";
 import { useQuery } from "@tanstack/react-query";
@@ -13,20 +13,62 @@ import { UserEnvelopsWithTotal } from "@/app/types";
 import { useGetEnvelopsData } from "@/queries/useGetEnvelopsData";
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { DataTable } from "@/components/DataTable";
-import { columns } from "./columns";
+import { getColumnDefinition } from "./columns";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
+interface DeleteProps {
+    open: boolean;
+    onOpenChange: (val: boolean) => void;
+    onSubmitClick: (id: number) => void;
+    data?: Pick<UserEnvelopsWithTotal, 'id' | 'name'> | null;
+}
+const DeleteModal: FC<DeleteProps> = ({open, onOpenChange, data, onSubmitClick}) => {
+    
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className="sm:max-w-[425px]">
+                <div className="flex flex-col gap-4">
+                    <div>Delete <span className="italic font-bold">`{data?.name}`</span> envelop?</div>
+                    <div className="flex gap-2 justify-end">
+                        <Button variant={"secondary"} onClick={() => onOpenChange(false)}>Cancel</Button>
+                        <Button variant={"destructive"} onClick={() => onSubmitClick(data?.id ?? 0)}>Confirm</Button>
+                        </div>
+                </div>
+            </DialogContent>
+        </Dialog>
+    )
+}
 
 interface Props {
     enableViewALlButton?: boolean;
     createOrUpdateEnvelopAction: (data: any, id?: number) => void;
+    deleteEnvelop: (id: number) => void;
 }
-export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton, createOrUpdateEnvelopAction }) => {
+export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton, createOrUpdateEnvelopAction, deleteEnvelop }) => {
     const { isOpen, updateModalState, openModal } = useModalState();
-    const { data, refetch, isLoading } = useGetEnvelopsData<UserEnvelopsWithTotal[]>()
+    const { isOpen: isOpenDelete, updateModalState: updateModalStateDelete, openModal: openModalDelete } = useModalState();
+    const { data, refetch, isLoading } = useGetEnvelopsData<UserEnvelopsWithTotal[]>();
     const createOrUpdateEnvelop = async (data: any, id?: number) => {
         await createOrUpdateEnvelopAction(data, id);
         refetch();
     }
+    const [selectedData, setSelectedData] = useState<Pick<UserEnvelopsWithTotal, 'name' | 'id' | 'description'> | null>(null);
+    const onEditClick = (data: Pick<UserEnvelopsWithTotal, 'name' | 'id' | 'description'>) => {
+        setSelectedData(data);
+        openModal();
+    }
+
+    const onDeleteClick = (data: Pick<UserEnvelopsWithTotal, 'name' | 'id' | 'description'>) => {
+        setSelectedData(data);
+        openModalDelete();
+    }
+
+    const onDeleteButtonCLick = async (id: number) => {
+        await deleteEnvelop(id);
+        updateModalStateDelete(false);
+        refetch();
+    }
+    const columns = getColumnDefinition(onEditClick, onDeleteClick)
     return (
         <Card x-chunk="dashboard-01-chunk-5" className="h-[100%] flex flex-col">
             <CardHeader className="flex flex-row items-center">
@@ -48,29 +90,11 @@ export const EnvelopTable: FC<PropsWithChildren<Props>> = ({ enableViewALlButton
             </CardHeader>
             <ScrollArea className="h-[65vh] pb-6" >
                 <CardContent className="h-[65vh] grid gap-6 ">
-                    <DataTable columns={columns} data={data as UserEnvelopsWithTotal[]} loading={isLoading} />
+                    <DataTable columns={columns} data={data as UserEnvelopsWithTotal[]} loading={isLoading}/>
                 </CardContent>
             </ScrollArea>
-            {/* <ScrollArea className="h-[65vh] pb-6" >
-                <CardContent className="h-[65vh] grid gap-6 ">
-                    {
-                        data?.map((e: UserEnvelopsWithTotal) => (
-                            <div key={e.id} className="flex items-center gap-4 last:mb-4">
-                                <div className="grid gap-1">
-                                    <p className="text-sm font-medium leading-none">
-                                        {e.name}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground">
-                                        {e.description}
-                                    </p>
-                                </div>
-                                <div className="ml-auto font-medium">+${e.amount}</div>
-                            </div>
-                        ))
-                    }
-                </CardContent>
-            </ScrollArea> */}
-            <AddOrUpdateEnvelopModal open={isOpen} onOpenChange={updateModalState} onSubmitClick={createOrUpdateEnvelop} />
+            <AddOrUpdateEnvelopModal open={isOpen} onOpenChange={updateModalState} onSubmitClick={createOrUpdateEnvelop} data={selectedData ?? undefined}/>
+            <DeleteModal open={isOpenDelete} onOpenChange={updateModalStateDelete} onSubmitClick={onDeleteButtonCLick} data={selectedData}/>
         </Card>
     )
 }

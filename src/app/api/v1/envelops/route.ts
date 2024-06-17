@@ -9,7 +9,7 @@ export async function GET() {
     if(!session || !session?.user?.email){
         return NextResponse.json([]);
     }
-    const envs =  await prisma.envelope.findMany({where: {user: session.user.email}});
+    const envs =  await prisma.envelope.findMany({where: {user: session.user.email}, orderBy: {id: 'asc'}});
     const data = envs.map(e => ({...e, amount: 0})) 
     return NextResponse.json({data});   
 }
