@@ -5,6 +5,7 @@ import { FC } from "react";
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { Moon, Sun } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const SettingCard: FC = () => {
     const { setTheme, theme } = useTheme();
@@ -18,7 +19,7 @@ const SettingCard: FC = () => {
     return <div className="flex items-center gap-4 last:mb-4">
         <div className="grid gap-1">
             <p className="text-sm font-medium leading-none">
-                Hello
+                UI Theme
             </p>
         </div>
         <div className="ml-auto font-medium"><div className="flex items-center space-x-2">
@@ -32,8 +33,8 @@ const SettingsPage: FC = () => {
 
     return (
         <div className="grid grid-cols-1 gap-4 ">
-            <div>Settings</div>
-            <div className="grid grid-cols-2 gap-4">
+            <div>Settings <Separator /></div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                     <SettingCard />
                 </div>

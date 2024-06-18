@@ -33,6 +33,7 @@ model Transactions {
   amount      Decimal
   description String?
   user        String
+  date        DateTime
   createdAt   DateTime
   updatedAt   DateTime
   envelopId   Int

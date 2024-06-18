@@ -36,11 +36,12 @@ import {
 } from '@tanstack/react-query'
 import { usePathname } from "next/navigation";
 import { FC, PropsWithChildren } from "react";
+import { Separator } from "@/components/ui/separator";
 
 
 const queryClient = new QueryClient()
 const iconClassName = "h-5 w-5 group-hover:scale-110";
-const selectedMenuItemCN = "group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base";
+const selectedMenuItemCN = "group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base";
 const defaultMenuItemCN = "group flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8";
 
 interface MenuItem {
@@ -54,11 +55,12 @@ const SidePanelDesktop: FC<PropsWithChildren<{ menuItems: MenuItem[], currentPat
     <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
       <Link
         href="#"
-        className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+        className="group flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
       >
-        <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
+        <Package2 className="h-6 w-6 transition-all group-hover:scale-110" />
         <span className="sr-only">Acme Inc</span>
       </Link>
+      <Separator />
       {
         menuItems.map((item: MenuItem, index: number) => {
           return (<TooltipProvider key={index}>

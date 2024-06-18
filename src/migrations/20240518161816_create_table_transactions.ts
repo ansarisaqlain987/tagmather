@@ -9,6 +9,7 @@ export async function up(knex: Knex): Promise<void> {
         table.text('description').nullable();
         table.string('user').notNullable();
         table.integer('envelopeId').notNullable();
+        table.dateTime('date');
         table.timestamps(true, true, true);
     })
 }
