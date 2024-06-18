@@ -26,7 +26,10 @@ import { cn } from "@/lib/utils";
 import { FC, PropsWithChildren } from "react";
 import { AddOrUpdateTransaction } from "./addAndUpdateTransactionModal";
 import { useModalState } from "@/hooks/useModalState";
-import { Transactions, Envelope } from "@/generated/client";
+import { Transactions, Envelop } from "@/generated/client";
+import { TableWithActions } from "@/components/TableWithActions";
+import { useGetTransactions } from "@/queries/useGetTransactions";
+import { useGetEnvelopWithTransactions } from "@/queries/useGetEnvelopWithTransactions";
 
 export type Column = {
     name: string;
@@ -37,14 +40,14 @@ export type Column = {
 interface TransactionTableProps {
     columns: Column[];
     transactions: Transactions[];
-    envelops: Envelope[];
-    displayViewAllButton?: boolean;
+    envelops: Envelop[];
 }
-export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({ columns, displayViewAllButton }) => {
+export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({ columns }) => {
     const { isOpen, updateModalState, openModal } = useModalState();
+    const { data, refetch, isLoading } = useGetEnvelopWithTransactions();
     const onSubmitClick = async (data: any) => {
     }
-    const cName = cn("grid gap-4 md:gap-8 grid-cols-1 xl:col-span-2", !displayViewAllButton ? "h-[65vh]" : "h-full")
+    const cName = cn("grid gap-4 md:gap-8 grid-cols-1 xl:col-span-2 h-full");
     return (
         <>
             <div className={cName}>
@@ -61,15 +64,6 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
                                     <Plus className="h-4 w-4" />
                                 </div>
                             </Button>
-                            {
-                                displayViewAllButton && (
-                                    <Button asChild size="sm">
-                                        <Link href="/dashboard/transactions">
-                                            <ArrowUpRight className="h-4 w-4" />
-                                        </Link>
-                                    </Button>
-                                )
-                            }
                         </div>
                     </CardHeader>
                     <CardContent>
@@ -119,4 +113,5 @@ export const TransactionTable: FC<PropsWithChildren<TransactionTableProps>> = ({
 
         </>
     )
+
 }

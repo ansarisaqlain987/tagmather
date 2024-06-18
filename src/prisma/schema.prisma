@@ -14,8 +14,8 @@ datasource db {
   url      = env("DB_URL")
 }
 
-model Envelope {
-  id          Int     @id @default(autoincrement())
+model Envelop {
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   user        String
@@ -24,20 +24,20 @@ model Envelope {
 
   transactions Transactions[]
 
-  @@map("envelopes")
+  @@map("envelops")
 }
 
 model Transactions {
-  id          Int             @id
+  id          String          @id @default(uuid())
   type        TransactionType
   amount      Decimal
   description String?
   user        String
   createdAt   DateTime
   updatedAt   DateTime
-  envelopeId  Int
+  envelopId   Int
 
-  envelope Envelope @relation(fields: [envelopeId], references: [id])
+  envelope Envelop @relation(fields: [envelopId], references: [id])
 
   @@map("transactions")
 }

@@ -9,7 +9,6 @@ export async function GET() {
     if(!session || !session?.user?.email){
         return NextResponse.json([]);
     }
-    const envs =  await prisma.envelop.findMany({where: {user: session.user.email}, orderBy: {id: 'asc'}});
-    const data = envs.map(e => ({...e, amount: 0})) 
-    return NextResponse.json({data});   
+    const transactions =  await prisma.transactions.findMany({where: {user: session.user.email}, orderBy: {id: 'asc'}})
+    return NextResponse.json({data: transactions});   
 }

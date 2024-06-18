@@ -1,27 +1,11 @@
 
-import { Column, TransactionTable } from "./transactionTable";
+import { TableWithActions } from "@/components/TableWithActions";
+import { Transactions } from "@/generated/client";
+import { TransactionTable } from "./transactionTable";
 
 export default async function Trans() {
-
-    const columns: Column[] = [
-        {
-            name: 'Type',
-        },
-        {
-            name: 'Amount',
-        },
-        {
-            name: 'Description',
-        },
-        {
-            name: 'CreatedAt',
-        },
-        {
-            name: 'UpdatedAt',
-            direction: 'right'
-        },
-    ]
+    const data: Transactions[] = [];
     return (
-        <TransactionTable columns={columns} transactions={[]} envelops={[]} />
+        <TransactionTable columns={[]} transactions={[]} envelops={[]} />
     )
 }

@@ -16,6 +16,7 @@ import { Column, TransactionTable } from "./transactions/transactionTable";
 import { EnvelopTable } from "./envelops/envelopTable";
 import { FC } from "react";
 import { addOrUpdateEnvelop } from "../actions/addOrUpdateEnvelop";
+import { deleteEnvelop } from "../actions/deleteEnvelop";
 
 
 const Dashboard: FC = async () => {
@@ -95,9 +96,9 @@ const Dashboard: FC = async () => {
                 </Card>
             </div>
             <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3 flex-1">
-                <EnvelopTable enableViewALlButton createOrUpdateEnvelopAction={addOrUpdateEnvelop} />
+                <EnvelopTable createOrUpdateEnvelopAction={addOrUpdateEnvelop} deleteEnvelop={deleteEnvelop} />
 
-                <TransactionTable columns={columns} transactions={[]} envelops={[]} displayViewAllButton />
+                <TransactionTable columns={columns} transactions={[]} envelops={[]} />
 
             </div>
         </div>
